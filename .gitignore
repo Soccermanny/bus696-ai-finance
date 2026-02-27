@@ -1,0 +1,18 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Office temp files
+~$*
+
+# Environment
+.env
+.venv/
