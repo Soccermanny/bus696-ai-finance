@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple vs S&P 500: Simple Comparison</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+        
+        .key-insight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .key-insight h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        
+        .key-insight p {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .metric-card {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .metric-card.sp500 {
+            border-left-color: #48bb78;
+        }
+        
+        .metric-card h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stock-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9em;
+        }
+        
+        .apple-icon {
+            background: #667eea;
+        }
+        
+        .sp500-icon {
+            background: #48bb78;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-label {
+            color: #4a5568;
+            font-weight: 500;
+        }
+        
+        .stat-value {
+            color: #2d3748;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        
+        .positive {
+            color: #48bb78;
+        }
+        
+        .negative {
+            color: #f56565;
+        }
+        
+        .chart-container {
+            margin-bottom: 40px;
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        
+        .chart-title {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+        
+        .explanation {
+            background: #edf2f7;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .explanation h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .explanation p {
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+        
+        .explanation ul {
+            margin-left: 25px;
+            color: #4a5568;
+        }
+        
+        .explanation li {
+            margin-bottom: 8px;
+        }
+        
+        .highlight {
+            background: #fef5e7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .highlight strong {
+            color: #d97706;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Apple vs S&P 500</h1>
+        <p class="subtitle">Understanding risk and reward in simple terms</p>
+        
+        <div class="key-insight">
+            <h2>🎯 The Bottom Line</h2>
+            <p>Apple gave investors <strong>2x the returns</strong> of the S&P 500 (20.64% vs 10%), but with <strong>2x the risk</strong> (31.80% volatility vs 15%). Your $1,000 grew to $1,168 - a 16.82% total gain.</p>
+        </div>
+        
+        <div class="comparison-grid">
+            <div class="metric-card">
+                <h3><span class="stock-icon apple-icon">AAPL</span> Apple Stock</h3>
+                <div class="stat-row">
+                    <span class="stat-label">Yearly Return</span>
+                    <span class="stat-value positive">+20.64%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Risk (Volatility)</span>
+                    <span class="stat-value">31.80%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Best Single Day</span>
+                    <span class="stat-value positive">+15.33%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Worst Single Day</span>
+                    <span class="stat-value negative">-9.25%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">$1,000 Became</span>
+                    <span class="stat-value positive">$1,168</span>
+                </div>
+            </div>
+            
+            <div class="metric-card sp500">
+                <h3><span class="stock-icon sp500-icon">S&P</span> S&P 500 (Historical)</h3>
+                <div class="stat-row">
+                    <span class="stat-label">Yearly Return</span>
+                    <span class="stat-value positive">+10.00%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Risk (Volatility)</span>
+                    <span class="stat-value">15.00%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Best Single Day</span>
+                    <span class="stat-value">~5-8%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Worst Single Day</span>
+                    <span class="stat-value">~-5 to -7%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">$1,000 Would Become</span>
+                    <span class="stat-value">~$1,100</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <h3 class="chart-title">Annual Returns: Higher Reward, Higher Risk</h3>
+            <canvas id="returnsChart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+            <h3 class="chart-title">Volatility: How Much the Price Bounces Around</h3>
+            <canvas id="volatilityChart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+            <h3 class="chart-title">Daily Swings: Best vs Worst Days</h3>
+            <canvas id="dailySwingsChart"></canvas>
+        </div>
+        
+        <div class="explanation">
+            <h3>🤔 What Does This All Mean?</h3>
+            <p><strong>Returns:</strong> Apple made you more money per year (20.64%) compared to the S&P 500's typical 10%. That's impressive!</p>
+            
+            <p><strong>Volatility (Risk):</strong> This measures how bumpy the ride is. Apple's 31.80% volatility means on a typical day, the stock price could swing up or down by about 2%. The S&P 500 at 15% volatility is much calmer - about half as bouncy.</p>
+            
+            <p><strong>Best and Worst Days:</strong> Apple had some wild days - up 15.33% on its best day, down 9.25% on its worst. These extreme swings show why volatility matters - you need strong nerves to hold through the drops!</p>
+        </div>
+        
+        <div class="highlight">
+            <p><strong>Think of it like roller coasters:</strong> Apple is the intense thrill ride with huge drops and climbs - exciting but scary. The S&P 500 is the family-friendly coaster - still fun, but much smoother. Apple gets you to the end faster (higher returns), but you'll grip the safety bar tighter (higher volatility).</p>
+        </div>
+        
+        <div class="explanation">
+            <h3>💡 Key Takeaways</h3>
+            <ul>
+                <li><strong>Higher returns = Higher risk:</strong> Apple's 20.64% return came with double the volatility of the S&P 500</li>
+                <li><strong>Diversification matters:</strong> The S&P 500 spreads across 500 companies, smoothing out the bumps. Apple is just one company</li>
+                <li><strong>Individual stocks are riskier:</strong> Apple's worst day (-9.25%) could wipe out nearly a year of S&P 500 returns in one day</li>
+                <li><strong>Past performance ≠ Future results:</strong> These numbers show what happened, not what will happen next</li>
+                <li><strong>Know your risk tolerance:</strong> Can you stomach losing 9% in a single day? If not, individual stocks might not be for you</li>
+            </ul>
+        </div>
+        
+        <div class="chart-container">
+            <h3 class="chart-title">Your $1,000 Investment Growth</h3>
+            <canvas id="investmentGrowthChart"></canvas>
+        </div>
+        
+    </div>
+    
+    <script>
+        // Chart 1: Returns Comparison
+        const ctx1 = document.getElementById('returnsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Apple (AAPL)', 'S&P 500'],
+                datasets: [{
+                    label: 'Annual Return (%)',
+                    data: [20.64, 10.0],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(72, 187, 120, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(102, 126, 234, 1)',
+                        'rgba(72, 187, 120, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.y.toFixed(2) + '% per year';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Annual Return (%)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Chart 2: Volatility Comparison
+        const ctx2 = document.getElementById('volatilityChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Apple (AAPL)', 'S&P 500'],
+                datasets: [{
+                    label: 'Volatility (%)',
+                    data: [31.80, 15.0],
+                    backgroundColor: [
+                        'rgba(245, 101, 101, 0.8)',
+                        'rgba(251, 191, 36, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(245, 101, 101, 1)',
+                        'rgba(251, 191, 36, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'Risk level: ' + context.parsed.y.toFixed(2) + '%';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Volatility (Higher = More Risk)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Chart 3: Daily Swings
+        const ctx3 = document.getElementById('dailySwingsChart').getContext('2d');
+        new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: ['Best Day', 'Worst Day', 'Average Day'],
+                datasets: [{
+                    label: 'Apple',
+                    data: [15.33, -9.25, 0.08],
+                    backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2
+                }, {
+                    label: 'S&P 500 (Typical)',
+                    data: [7, -6, 0.04],
+                    backgroundColor: 'rgba(72, 187, 120, 0.8)',
+                    borderColor: 'rgba(72, 187, 120, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + '%';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Daily Return (%)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Chart 4: Investment Growth
+        const ctx4 = document.getElementById('investmentGrowthChart').getContext('2d');
+        new Chart(ctx4, {
+            type: 'line',
+            data: {
+                labels: ['Start', 'End of Period'],
+                datasets: [{
+                    label: 'Apple Investment',
+                    data: [1000, 1168.15],
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }, {
+                    label: 'S&P 500 (Estimated)',
+                    data: [1000, 1100],
+                    borderColor: 'rgba(72, 187, 120, 1)',
+                    backgroundColor: 'rgba(72, 187, 120, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value;
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Value of $1,000 Investment'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
