@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "Bash(python *)",
+      "PowerShell(\\(Get-Item \"C:\\\\Users\\\\manny\\\\Documents\\\\BUS696\\\\Chapman_FSM_DCF\\\\Videos\\\\BUS_696_Financial_Statement_Modeling\\\\FSM_TRANSCRIPTS_SUMMARY.md\"\\).Length; \\(Get-Content \"C:\\\\Users\\\\manny\\\\Documents\\\\BUS696\\\\Chapman_FSM_DCF\\\\Videos\\\\BUS_696_Financial_Statement_Modeling\\\\FSM_TRANSCRIPTS_SUMMARY.md\" | Measure-Object -Line\\).Lines)",
+      "PowerShell(Get-Content *)",
+      "PowerShell(\\(Get-Content \"C:\\\\Users\\\\manny\\\\Documents\\\\BUS696\\\\Chapman_FSM_DCF\\\\Videos\\\\BUS_696_LBO\\\\LBO_TRANSCRIPTS_SUMMARY.md\" | Measure-Object -Line\\).Lines)",
+      "Bash(Get-Content \"C:\\\\Users\\\\manny\\\\Documents\\\\BUS696\\\\Chapman_FSM_DCF\\\\Videos\\\\BUS_696_LBO\\\\LBO_TRANSCRIPTS_RESUMMARIZED.md\")",
+      "Bash(Measure-Object -Line)"
+    ]
+  }
+}

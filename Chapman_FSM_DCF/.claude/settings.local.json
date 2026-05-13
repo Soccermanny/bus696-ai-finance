@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"C:\\\\Users\\\\manny\\\\Documents\\\\BUS696\\\\Chapman_FSM_DCF\" /b /s)",
+      "Bash(findstr /i \"video transcript\")",
+      "Bash(dir \"C:\\\\Users\\\\manny\\\\Documents\\\\BUS696\\\\Chapman_FSM_DCF\")",
+      "Bash(dir C:\\\\Users\\\\manny\\\\Documents\\\\BUS696\\\\Chapman_FSM_DCF\\\\Videos\\\\BUS_696_Financial_Statement *)",
+      "Bash(dir \"C:\\\\Users\\\\manny\\\\Documents\\\\BUS696\\\\Chapman_FSM_DCF\\\\Videos\" /b)"
+    ]
+  }
+}

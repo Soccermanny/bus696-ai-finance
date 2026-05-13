@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital PIB</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    html, body, #root { height: 100%; margin: 0; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    // Change this if your backend URL changes.
+    window.CLOUD_FUNCTION_URL = "https://fetch-financials-510542997368.us-central1.run.app/";
+  </script>
+  <script type="text/babel" data-presets="react" src="./DigitalPIB.browser.jsx"></script>
+</body>
+</html>
