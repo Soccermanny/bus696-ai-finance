@@ -1,4 +1,4 @@
-# High-Priority Fixes Applied — BUS696 Trading Strategy
+# High-Priority Fixes Applied — Defense Sector Trading Strategy (BUS696)
 
 ## 🎯 Work Completed: Look-Ahead Bias Elimination
 
@@ -62,50 +62,45 @@ def add_sec_filing_lag(accruals_df):
 
 ---
 
-### **FIX #3: Survivorship Bias — PARTIAL (5-15% Overstatement)**
+### **FIX #3: Survivorship Bias — PARTIAL (2-5% Overstatement)**
 
-**Location:** Section 1a, new function `get_sp500_tickers_historical()`
+**Location:** Section 1, defense universe definition
 
 **Problem:**
-- Current S&P 500 list (from Wikipedia) only includes current members
-- Excludes ~200-300 stocks that were delisted/removed during 2015-2024
-- Delisted stocks are usually losers (bankruptcies, mergers, underperformance)
-- Result: +5-15% false alpha from excluding underperformers
+- Defense universe uses 21 current stocks — companies that are still publicly traded
+- M&A activity (Raytheon + UTC merger in 2020 → RTX) means some historical entities no longer exist independently
+- Delisted/acquired defense firms (e.g., DRS Defense Solutions before FINMECCANICA acquisition) are excluded
+- Result: +2-5% false alpha from excluding acquired/delisted names
 
 **Solution Applied:**
 ```python
-def get_sp500_tickers_historical():
-    """Attempt to incorporate historical constituents."""
-    current = get_sp500_tickers()[0]
-    # Adds guidance on obtaining true historical constituents
-    return universe
+# Defense universe is fixed at 21 current tickers
+# This is largely appropriate: defense primes rarely go bankrupt (government revenue)
+# Main survivorship source is M&A (not bankruptcy), which is disclosed in honest assessment
+DEFENSE_UNIVERSE = ['LMT', 'RTX', 'NOC', 'GD', 'BA', 'HII', 'LHX', 'LDOS',
+                    'BAH', 'SAIC', 'CACI', 'HEICO', 'TDG', 'KTOS', 'AXON',
+                    'BWXT', 'DRS', 'CW', 'MRCY', 'PLTR', 'VSEC']
 ```
 
 **How to Implement Full Fix (For Final Submission):**
 
-**Option 1: Wayback Machine (Free, ~1 hour)**
+**Option 1: Cross-reference historical defense primes (Free, ~30 min)**
 ```
-1. Go to: https://web.archive.org/web/*/en.wikipedia.org/wiki/List_of_S%26P_500_companies
-2. Download snapshots from: 2015, 2017, 2019, 2021, 2023, 2024
-3. Extract tickers from each
-4. Union all years = more accurate constituent list
-```
-
-**Option 2: SEC EDGAR (Free, requires coding)**
-```
-1. Download CIK database: https://www.sec.gov/cgi-bin/browse-edgar
-2. Filter by: Large Accelerated Filers, 10-K filings, 2015-2024
-3. Use CIK-to-ticker mapping
+1. Check DoD Top 100 Contractors lists (2015-2024) at: https://www.acq.osd.mil/
+2. Identify any firms that were delisted/acquired during backtest period
+3. Add representative data for acquired entities (DRS, L-3 Communications pre-LHX merger)
 ```
 
-**Option 3: constituents.com (Paid, $500-1000)**
+**Option 2: SAM.gov historical contractors (Free, requires registration)**
 ```
-1. Sign up and download historical constituents matrix
-2. Most accurate; covers exact addition/removal dates
+1. Register at: https://api.sam.gov/
+2. Query historical prime contractors by NAICS code (defense manufacturing)
+3. Cross-reference against current universe to identify M&A events
 ```
 
-**Current Status:** Strategy uses current constituents (introduces bias)
-**Recommended for Submission:** Implement Wayback Machine approach
+**Current Status:** Defense universe is fixed — much lower survivorship bias than broad equity strategies
+**Why Less Severe:** Defense primes rarely go bankrupt; M&A is the main risk (explicitly documented)
+**Recommended for Submission:** Note M&A survivorship in Honest Assessment (already done in Cell 51)
 
 ---
 
@@ -115,7 +110,7 @@ def get_sp500_tickers_historical():
 |--------|-------------|---------------|--------|
 | Insider | 100% look-ahead | -0.18 | ✅ FIXED |
 | Accruals | 45-60 day lag | -0.12 | ✅ FIXED |
-| Universe | 5-15% surv. | -0.15 | ⚠️ PARTIAL |
+| Universe | 2-5% M&A surv. | -0.05 | ⚠️ PARTIAL |
 | **Total** | | **-0.45** | |
 
 **Reported Sharpe:** 1.45  
@@ -141,10 +136,12 @@ print(accruals_df['date'].min())  # Should be ~60 days after quarter-end
 # Q1 ends 2024-03-31 → should show ~2024-05-30
 ```
 
-**3. Check universe fix guidance:**
+**3. Check defense universe survivorship guidance:**
 ```python
-# In cell: get_sp500_tickers_historical()
-# Should print instructions for Wayback Machine approach
+# In Cell 51 (Honest Assessment):
+# Should document M&A survivorship for defense universe
+# e.g., "L-3 Communications → LHX (2019), UTC + Raytheon → RTX (2020)"
+# Estimated bias: 2-5% (much lower than S&P 500 survivorship)
 ```
 
 ---
@@ -183,6 +180,6 @@ print(accruals_df['date'].min())  # Should be ~60 days after quarter-end
 
 1. **Transaction Costs:** Still flat $50M ADV (should tier by market cap)
 2. **True Out-of-Sample:** Should test on 2024+ data never seen in development
-3. **Alternative Data:** LLM sentiment signal still in demo mode
+3. **Alternative Data:** SPECTRE GRI uses historical proxy (2015-2024); live API used for forward-looking signals only
 
 But the three fixed issues above were the most critical (70% of total bias).

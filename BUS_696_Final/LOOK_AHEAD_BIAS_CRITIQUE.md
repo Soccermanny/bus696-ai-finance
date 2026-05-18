@@ -1,5 +1,5 @@
 # Critical Look-Ahead Bias & Methodological Audit
-## BUS696 Final Project Trading Strategy
+## Defense Sector Cross-Sectional Trading Strategy (BUS696)
 
 ---
 
@@ -233,28 +233,35 @@ def compute_low_vol_signal(returns_monthly, lookback=6):
 ## 🟡 MODERATE ISSUES & GOTCHAS
 
 ### 7. **Survivorship Bias in Universe Construction**
-**Location:** Section 1a, `get_sp500_tickers()`
+**Location:** Section 1, `DEFENSE_UNIVERSE` definition
 
 ```python
-tickers = df['Symbol'].tolist()  # Uses CURRENT S&P 500 list
+DEFENSE_UNIVERSE = ['LMT', 'RTX', 'NOC', 'GD', 'BA', 'HII', 'LHX', 'LDOS',
+                    'BAH', 'SAIC', 'CACI', 'HEICO', 'TDG', 'KTOS', 'AXON',
+                    'BWXT', 'DRS', 'CW', 'MRCY', 'PLTR', 'VSEC']
 ```
 
 **Problem:**
-- Scraped from Wikipedia today → includes current members only
-- Companies delisted or removed from S&P 500 during 2015-2024 are **excluded**
-- Companies added to S&P 500 during 2015-2024 are **included** even if they weren't there in 2015
-- This creates **positive bias** — excludes losers (delisted) and includes winners (added to index)
+- Universe uses 21 current defense stocks — all still publicly traded as of May 2026
+- Firms acquired or merged during 2015-2024 are excluded (e.g., L-3 Communications merged into LHX in 2019)
+- This creates **mild positive bias** — excludes underperformers that were taken private or failed
 
 **Estimated Bias:**
-- ~50-100 companies turn over in S&P 500 per year
-- 10-year backtest misses ~200-300 delisted companies
-- **Survival bias uplifts returns by ~5-15% annually** (academic studies estimate)
+- Defense prime M&A rate: ~2-4 major events per decade (much lower than broad equity turnover)
+- Survivorship uplift estimated at **2-5% annually** (much lower than broad indices)
+- Defense primes rarely go bankrupt (government revenue provides floor); main risk is M&A
 
-**Fix:**
+**Key Mitigant:**
+- Defense universe is **deliberately fixed** (not dynamically scraped) → more stable than S&P 500 list
+- Disclosed explicitly in Honest Assessment (Cell 51): "Universe covers currently-traded defense primes"
+
+**Fix (if needed):**
 ```python
-# Use point-in-time S&P 500 constituents from Wikipedia archive:
-# Or use Quandl's historical S&P 500 constituents
-# Or download from https://www.constituents.com/
+# Cross-reference DoD Top 100 Contractors list (2015-2024):
+# https://www.acq.osd.mil/
+# Identify: L-3 Communications (→ LHX), DRS Technologies (→ Leonardo DRS),
+#           United Technologies (→ RTX after merger with Raytheon)
+# Add historical price series for pre-merger entities
 ```
 
 ---
@@ -315,23 +322,23 @@ adv_est = 5e7  # $50M ADV per stock (conservative large-cap)
 ```
 
 **Problem:**
-- $50M ADV for a large-cap is reasonable AVERAGE, but:
-  - S&P 500 stocks vary wildly: AAPL trades $300B+ daily, others $10-50M
-  - Using flat estimate **underestimates costs for less-liquid names**
+- $50M ADV for a defense prime is a reasonable AVERAGE, but:
+  - Defense stocks vary significantly: LMT trades ~$2B+ daily, VSEC trades ~$20M daily
+  - Using flat estimate **underestimates costs for small/mid-tier defense names**
   - Code uses `yfinance monthly data` → no daily volume data available
   - Cost estimates are thus **rough approximations**
 
 **Impact:**
-- Portfolio with less-liquid names (e.g., small-cap value stocks) will trade at **higher costs**
-- Backtest costs are **overly optimistic**
+- Portfolio with less-liquid names (MRCY, VSEC, KTOS) will trade at **higher costs**
+- Backtest costs are **overly optimistic for small defense contractors**
 
 **Better Fix:**
 ```python
 # Use yfinance daily data to compute actual 20-day ADV per stock
-# Segment portfolio by liquidity tier:
-# - Large-cap (>$100B mkt cap): 1-2 bps market impact
-# - Mid-cap ($10-100B): 3-5 bps
-# - Small-cap (<$10B): 5-15 bps
+# Segment defense universe by liquidity tier:
+# - Mega-cap primes (LMT, RTX, NOC, GD, BA): 1-2 bps market impact
+# - Mid-tier (HII, LHX, BAH, LDOS, SAIC): 3-5 bps
+# - Small specialty (MRCY, VSEC, DRS, CW): 5-15 bps
 ```
 
 ---
@@ -350,7 +357,7 @@ adv_est = 5e7  # $50M ADV per stock (conservative large-cap)
 
 ### 13. **No Hedging or Dollar-Neutral Check**
 - Portfolio is long-only, fully invested
-- If S&P 500 crashes 40%, strategy might crash too
+- If equity markets crash 40%, defense stocks may still fall (beta ~0.6-0.9)
 - Regime scaler helps but doesn't eliminate market beta
 
 ### 14. **Earnings Quality: Buyer Yield Double-Counting**

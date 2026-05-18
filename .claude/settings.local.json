@@ -7,7 +7,10 @@
       "PowerShell(Get-Content *)",
       "PowerShell(\\(Get-Content \"C:\\\\Users\\\\manny\\\\Documents\\\\BUS696\\\\Chapman_FSM_DCF\\\\Videos\\\\BUS_696_LBO\\\\LBO_TRANSCRIPTS_SUMMARY.md\" | Measure-Object -Line\\).Lines)",
       "Bash(Get-Content \"C:\\\\Users\\\\manny\\\\Documents\\\\BUS696\\\\Chapman_FSM_DCF\\\\Videos\\\\BUS_696_LBO\\\\LBO_TRANSCRIPTS_RESUMMARIZED.md\")",
-      "Bash(Measure-Object -Line)"
+      "Bash(Measure-Object -Line)",
+      "Bash(del edit_notebook.py)",
+      "WebFetch(domain:spectre.up.railway.app)",
+      "Bash(powershell -Command \"\\(Get-Content PRESENTATION_BRIEF.md\\).Count\")"
     ]
   }
 }

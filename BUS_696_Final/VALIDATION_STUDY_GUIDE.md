@@ -1,5 +1,5 @@
 # Historical Validation Study Guide
-## Out-of-Sample Model Testing Across 10-Year Windows
+## Defense Sector Cross-Sectional Strategy — Out-of-Sample Model Testing Across 10-Year Windows
 
 ---
 
@@ -234,20 +234,20 @@ Downmarket Accuracy:    45%
 
 ## Comparison to Your Main Model
 
-This validation study is **intentionally simplified** compared to your main BUS696 project:
-- Uses only 2 signals (momentum, low-vol) vs 5
-- No insider data, earnings quality, or macro regime scaler
-- Single XGBoost model vs walk-forward ensemble
+This validation study is **intentionally simplified** compared to the main BUS696 defense sector project:
+- Uses only 2 signals (momentum, low-vol) vs 6 defense-optimized signals
+- No insider data, earnings quality, SPECTRE GRI, or macro/geo regime scaler
+- Single XGBoost model vs walk-forward ensemble on 21-stock defense universe
 
 **Why simplified?**
 - Easier to replicate and understand
-- Focuses on core signal robustness
-- Provides baseline to compare against main model
+- Focuses on core signal robustness across decades
+- Provides baseline to compare against main defense sector model
 
 **Expected result:** 
-- Main model IC should be **higher** (more signals)
-- Historical validation IC should be **lower** (fewer signals)
-- If equal/close → main model signals may not add value
+- Main defense model IC should be **higher** (6 signals + SPECTRE GRI alt data)
+- Historical validation IC should be **lower** (fewer signals, broader universe)
+- If equal/close → defense-specific signals (insider, SPECTRE, low-beta BAB) may not add value beyond momentum + low-vol
 
 ---
 
@@ -277,5 +277,6 @@ This validation study is **intentionally simplified** compared to your main BUS6
 ---
 
 Created: May 6, 2026
-Model: XGBoost Cross-Sectional Prediction
+Model: XGBoost Cross-Sectional Prediction — Defense Sector Strategy (BUS696)
+Universe: 21 U.S. Defense & Aerospace Stocks
 Test Period: 1990-2026 (excluding crises)

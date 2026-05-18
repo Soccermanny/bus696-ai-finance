@@ -7,6 +7,7 @@ import os
 warnings.filterwarnings('ignore')
 
 print("\n" + "="*80)
+print("COMPREHENSIVE VALIDATION: DEFENSE SECTOR STRATEGY (BUS696)")
 print("COMPREHENSIVE VALIDATION: FSM/TC/MA REFINEMENTS")
 print("="*80)
 
@@ -53,7 +54,7 @@ print("\n[3/4] Validating Signal 4 components...")
 def xsec_zscore(df):
     return df.sub(df.mean(axis=1), axis=0).div(df.std(axis=1), axis=0)
 
-def compute_ic(signal, forward_returns, min_obs=50):
+def compute_ic(signal, forward_returns, min_obs=10):  # min_obs=10 for 21-stock defense universe
     ic_series = []
     fwd_ret = forward_returns.shift(-1)
     common_idx = signal.index.intersection(fwd_ret.index)
